@@ -3,13 +3,13 @@ services:
     image: mkuf/klipper:latest
     container_name: klipper
     restart: unless-stopped
-    privileged: true
     volumes:
       - ./config:/opt/printer_data/config
       - ./gcodes:/opt/printer_data/gcodes
       - ./logs:/opt/printer_data/logs
       - ./run:/opt/printer_data/run
-      - /dev:/dev
+    devices:
+      - /dev/serial/by-id/PRINTER-ID:/dev/serial/by-id/PRINTER-ID
 
   moonraker:
     image: mkuf/moonraker:latest
