@@ -1,0 +1,21 @@
+# Credentials
+*.htpasswd
+
+# runtime files
+gcodes/
+*.gcode
+logs/
+run/
+tmp/
+*.tmp
+*.log
+
+# moonraker
+config/.moonraker_database
+config/moonraker.asvc
+
+# klipper
+config/printer-*.cfg
+
+# mainsail
+mainsail-html/
