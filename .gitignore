@@ -19,3 +19,8 @@ config/printer-*.cfg
 
 # mainsail
 mainsail-html/
+
+# firmware
+firmware/build/
+*.bin
+*.elf
