@@ -8,8 +8,10 @@ services:
       - ./gcodes:/opt/printer_data/gcodes
       - ./logs:/opt/printer_data/logs
       - ./run:/opt/printer_data/run
-    devices:
-      - /dev/serial/by-id/usb-Klipper_stm32f103xe_36FFD5054254393025832457-if00:/dev/serial/by-id/usb-Klipper_stm32f103xe_36FFD5054254393025832457-if00
+      - /dev:/dev
+    device_cgroup_rules:
+      - "c 188:* rmw"
+      - "c 166:* rmw"
 
   moonraker:
     image: mkuf/moonraker:latest
