@@ -25,15 +25,40 @@ services:
       - ./logs:/opt/printer_data/logs
       - ./run:/opt/printer_data/run
 
+  dockerproxy:
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: dockerproxy
+    restart: unless-stopped
+    environment:
+      CONTAINERS: 1
+      POST: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   mainsail:
     image: nginx:latest
     container_name: mainsail
     restart: unless-stopped
     ports:
-      - "8090:80"
+      - 100.94.11.29:8090:80
     volumes:
       - ./mainsail-html:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./.htpasswd:/etc/nginx/.htpasswd:ro
     depends_on:
       - moonraker
+      - dockerproxy
+
+  webcam:
+    image: pikvm/ustreamer:latest
+    container_name: klipper_webcam
+    restart: unless-stopped
+    devices:
+      - /dev/video0:/dev/video0
+    command:
+      - --device=/dev/video0
+      - --format=mjpeg
+      - --resolution=1280x720
+      - --desired-fps=30
+      - --host=0.0.0.0
+      - --port=8080
